@@ -1,0 +1,10 @@
+body{
+	font-family: courier;
+	font-size: 14px
+	}
+	h1, h2 {
+	font-family:  'Oxygen', sans-serif;
+	}
+	button {
+		border-radius:13px;
+		}

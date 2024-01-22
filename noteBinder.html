@@ -1,14 +1,20 @@
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html";
-  charset=utf-8" />
+<meta http-equiv="Content-Type" content="text/html"; 
+charset="utf-8" />
 <title>Localmotion</title>
-
 <link rel="icon" href="evilhank.gif">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Oxygen&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="reg.css">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+     integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+     crossorigin=""/>
+  <!-- Make sure you put this AFTER Leaflet's CSS -->
+ <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+     integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+     crossorigin=""></script>
 </head>  
 <header>
 <div>
@@ -17,7 +23,7 @@
 </div>
 <div>
 	<h1>A List For Locals</h1>
-		<p>A list of data from the local stash.</p>
+		<p>A list of data from the local store.</p>
 </div>
 </header>
 <body>
@@ -29,13 +35,49 @@
 	<ul id="gcList">
 	</ul>
 </div>
+<button id="randomization" onclick="randoButt()">Randomize</button>
+<div id="coords">
+</div>
+<div id="map"></div>
+<script>
+function randoButt() {
+		var lat = Math.random() * 90;
+		var lng = Math.random() * 360;
+		var coords = document.getElementById('coords')
+		coords.innerText = "lat:" + lat +" " + "long: "+ lng;		
+		var map = L.map('map').setView([lat,lng], 13);
+			L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 19,
+    attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+}).addTo(map);
+		console.log(map);
+	
+	}
 
+	if ("geolocation" in navigator) {
+
+	navigator.geolocation.getCurrentPosition(
+		(position) => {
+			const lat = position.coords.latitude;
+			const lng = position.coords.longitude;
+			console.log(lat, lng);
+			var coords = document.getElementById('coords')
+			coords.innerText = "lat:" + lat +" " + "long: "+ lng;
+			var map = L.map('map').setView([lat,lng], 13);
+			L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 19,
+    attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+}).addTo(map);
+
+		},
+		(error) => {
+			console.error("Error", error);
+		}
+		);
+	} else {
+	console.error("nope");
+}
+
+</script>
 </body>
-<!-- to use an external js script uncomment below -->
-
-<!-- uncomment script tags below for local includion of script -->
-<!--<script>
-//paste the awesome script here
-
-</script> -->
 </html>

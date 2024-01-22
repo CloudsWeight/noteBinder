@@ -8,3 +8,6 @@ body{
 	button {
 		border-radius:13px;
 		}
+
+
+#map { height: 380px; }

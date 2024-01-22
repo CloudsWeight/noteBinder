@@ -51,3 +51,7 @@ function loadListFromLocalStorage() {
 	listItemCounter = listItems.length + 1;
 	}
 }
+
+
+
+

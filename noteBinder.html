@@ -18,65 +18,61 @@ charset="utf-8" />
 </head>  
 <header>
 <div>
-	<a target="_blank" href="https://Cloudsweight.com"> <img style="border-radius: 13px;" src="ducatiootro.png"/>
-	</a>
+    <a target="_blank" href="https://Cloudsweight.com"> <img style="border-radius: 13px;" src="ducatiootro.png"/>
+    </a>
 </div>
 <div>
-	<h1>A List For Locals</h1>
-		<p>A list of data from the local store.</p>
+    <h1>A List For Locals</h1>
+        <p>A list of data from the local store.</p>
 </div>
 </header>
 <body>
-	<script type="text/javascript" src="snazzyaxx.js"></script>
+    <script type="text/javascript" src="snazzyaxx.js"></script>
 <div>
-	<h2>Add Relevant Data</h2>
-	<button onclick="getList()" >Add</button> 
-	<input type="text" id="textInput" placeholder="Enter the data!!">
-	<ul id="gcList">
-	</ul>
+    <h2>Add Relevant Data</h2>
+    <button onclick="getList()" >Add</button> 
+    <input type="text" id="textInput" placeholder="Enter the data!!">
+    <ul id="gcList">
+    </ul>
 </div>
 <button id="randomization" onclick="randoButt()">Randomize</button>
 <div id="coords">
 </div>
 <div id="map"></div>
 <script>
-function randoButt() {
-		var lat = Math.random() * 90;
-		var lng = Math.random() * 360;
-		var coords = document.getElementById('coords')
-		coords.innerText = "lat:" + lat +" " + "long: "+ lng;		
-		var map = L.map('map').setView([lat,lng], 13);
-			L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    maxZoom: 19,
-    attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-}).addTo(map);
-		console.log(map);
-	
-	}
+var map;
+var coords = document.getElementById('coords')
+    if ("geolocation" in navigator) {
 
-	if ("geolocation" in navigator) {
+        navigator.geolocation.getCurrentPosition(
+        (position) => {
+                const lat = position.coords.latitude;
+                const lng = position.coords.longitude;
+                console.log(lat, lng);
+                coords.innerText = "lat:" + lat +" " + "long: "+ lng;
+                map = L.map('map').setView([lat,lng], 10);
+                L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                maxZoom: 19,
+                attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+                }).addTo(map);
 
-	navigator.geolocation.getCurrentPosition(
-		(position) => {
-			const lat = position.coords.latitude;
-			const lng = position.coords.longitude;
-			console.log(lat, lng);
-			var coords = document.getElementById('coords')
-			coords.innerText = "lat:" + lat +" " + "long: "+ lng;
-			var map = L.map('map').setView([lat,lng], 13);
-			L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    maxZoom: 19,
-    attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-}).addTo(map);
 
-		},
-		(error) => {
-			console.error("Error", error);
-		}
-		);
-	} else {
-	console.error("nope");
-}
+            },
+            (error) => {
+                console.error("Error", error);
+            }
+        );
+    }
+    
+        function randoButt() {
+        var latNew = Math.random() * 90;
+        var lngNew = Math.random() * 360;
+        var randPosition = {latNew, lngNew};
+        coords.innerText = "lat:" + latNew +" " + "long: "+ lngNew;
+        map.setView([latNew,lngNew], 10);
+    }
+</script>
+<script>
 
 </script>
 </body>
